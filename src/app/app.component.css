@@ -1,11 +1,12 @@
 * {
     margin: 0px;
     padding: 0px;
+    color: rgb(219, 219, 219);
 }
 
 nav {
     position: relative;
-    background-color: lightskyblue;
+    background-color: rgb(101, 191, 246);
     padding-top: 2em;
     padding-bottom: 2em;
     margin: -8px;
@@ -29,7 +30,12 @@ li {
     block-size: auto;
 }
 
-li * {
+li p-button {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+li a {
     padding-left: 1em;
     padding-right: 1em;
     transition-duration: 0.4s;
