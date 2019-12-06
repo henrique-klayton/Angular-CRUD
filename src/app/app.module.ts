@@ -10,6 +10,8 @@ import { PasswordModule } from 'primeng/password';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 
+import { MessageService } from 'primeng/api';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AccountsComponent } from './accounts/accounts.component';
@@ -37,6 +39,7 @@ import { AccountService } from './account.service';
   ],
   providers: [
     AccountService,
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

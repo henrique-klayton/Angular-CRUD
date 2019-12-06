@@ -18,7 +18,7 @@ export class AccountsComponent implements OnInit {
   account: { id: number; username: string; email: string; password: string; } = {};
   selectedAccount: Account;
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService, private messageService: MessageService) { }
 
   ngOnInit() {
     this.accounts = this.accountService.getAllAccounts();
@@ -56,25 +56,43 @@ export class AccountsComponent implements OnInit {
 
   saveAccount() {
     if (this.newAccount) {
-      this.accountService.createAccount(this.account);
+      const result = this.accountService.createAccount(this.account);
       this.refresh();
+      if (result == 'OK') {
+        this.successMessage('Conta Criada!', 'Conta criada com sucesso.')
+      }
     } else {
-      this.accountService.updateAccount(this.account);
+      const result = this.accountService.updateAccount(this.account);
       this.refresh();
+      if (result == 'OK') {
+        this.successMessage('Conta Atualizada!', 'Os dados dessa conta foram atualizados com sucesso.')
+      }
     }
     this.displayDialog = false;
   }
 
   deleteAccount() {
     if (!this.newAccount) {
-      this.accountService.deleteAccount(this.account.id);
+      const result = this.accountService.deleteAccount(this.account.id);
       this.displayDialog = false;
       this.refresh();
+        if (result == 'OK') {
+          this.successMessage('Conta Deletada!', 'Conta deletada com sucesso.')
+        } else if (result == 'NF') {
+          this.errorMessage('Falha ao deletar!', 'A conta com esse id não foi encontrada.')
+        }
     }
   }
 
   refresh() {
     this.accounts = this.accountService.getAllAccounts();
   }
+
+  successMessage(summary: string, detail: string) {
+    this.messageService.add({ severity: 'success', summary: summary, detail: detail})
+  }
+
+  errorMessage(summary: string, detail: string) {
+    this.messageService.add({ severity: 'error', summary: summary, detail: detail})
   }
 }
