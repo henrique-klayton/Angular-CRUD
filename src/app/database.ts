@@ -3,6 +3,7 @@ import { Account } from 'src/model/account';
 export class Database {
 
   private accounts: Account[];
+  private lastId;
 
   constructor() {
     this.load();
@@ -37,11 +38,12 @@ export class Database {
     return 'NF';
   }
 
-  createAccount(account: Account): string {
-    if (this.getAccountById(account.getId()) === 'NF') {
-      return 'AE';
-    }
-    this.accounts.push(account);
+  createAccount(account: { username: string; email: string; password: string; }): string {
+    this.accounts.push(new Account(this.lastId + 1,
+                                   account.username,
+                                   account.email,
+                                   account.password));
+    this.lastId += 1;
     return 'OK';
   }
 
@@ -90,5 +92,6 @@ export class Database {
       new Account(25, 'Alguém', 'alguem@emails.com', '********'),
       new Account(26, 'Alguém', 'alguem@emails.com', '********')
     ];
+    this.lastId = this.accounts.length - 1;
   }
 }
